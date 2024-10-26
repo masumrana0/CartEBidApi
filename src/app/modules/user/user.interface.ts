@@ -1,10 +1,9 @@
 /* eslint-disable no-unused-vars */
 import { Model } from 'mongoose';
 
-export type IProfile = {
+export type ICommonProfile = {
+  userId: string;
   name?: string;
-  documents: string[];
-  contactNo?: string;
   profilePhoto?: string;
 };
 

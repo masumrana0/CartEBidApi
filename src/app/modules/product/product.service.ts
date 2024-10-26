@@ -1,24 +1,77 @@
-import { http } from 'winston';
 import ApiError from '../../../errors/ApiError';
 import { FileUploadHelper } from '../../../helper/FileUploadHelper';
 import { IUploadFile } from '../../../inerfaces/file';
 import { IProduct } from './product.interface';
 import { Product } from './product.model';
 import httpStatus from 'http-status';
-// Create a new product
+
 const createProduct = async (
-  payload: IProduct,
+  productData: IProduct,
   files: IUploadFile[],
 ): Promise<IProduct | null> => {
-  const images = await FileUploadHelper.uploadMultipleToCloudinary(files);
+  // Track uploaded URLs for cleanup in case of failure
+  let uploadedUrls: string[] = [];
 
-  payload.photos.mainPhoto = images[0];
-  payload.photos.others = images?.filter(
-    (_: string, index: number) => index !== 0,
-  );
+  try {
+    // 1. Validate input files
+    const mainPhotoFile = files.find(file => file.fieldname === 'mainPhoto');
+    const otherPhotos = files.filter(file => file.fieldname === 'others');
+    const docPhotos = files.filter(file => file.fieldname === 'docs');
 
-  const result = await Product.create(payload);
-  return result;
+    if (!mainPhotoFile) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Main photo is required');
+    }
+    if (otherPhotos.length === 0) {
+      throw new ApiError(
+        httpStatus.BAD_REQUEST,
+        'At least one other photo is required',
+      );
+    }
+    if (docPhotos.length === 0) {
+      throw new ApiError(
+        httpStatus.BAD_REQUEST,
+        'At least one document photo is required',
+      );
+    }
+
+    // uploading all file
+    const mainPhotoUrl = (await FileUploadHelper.uploadSinleToCloudinary(
+      mainPhotoFile,
+    )) as string;
+
+    const otherPhotoUrls =
+      await FileUploadHelper.uploadMultipleToCloudinary(otherPhotos);
+
+    const docsPhotoUrls =
+      await FileUploadHelper.uploadMultipleToCloudinary(docPhotos);
+
+    uploadedUrls = [mainPhotoUrl, ...otherPhotoUrls, ...docsPhotoUrls];
+
+    // 3. Create product with uploaded URLs
+    const productWithPhotos: IProduct = {
+      ...productData,
+      photos: {
+        mainPhoto: mainPhotoUrl,
+        others: otherPhotoUrls,
+        docs: docsPhotoUrls,
+      },
+    };
+
+    // Save to database
+    const result = await Product.create(productWithPhotos);
+    return result;
+  } catch (error) {
+    //  Clean up uploaded files if any step fails
+    if (uploadedUrls.length > 0) {
+      try {
+        await FileUploadHelper.deleteMultipleImagesByUrl(uploadedUrls);
+      } catch (cleanupError) {
+        console.error('Error cleaning up uploaded files:', cleanupError);
+      }
+    }
+    // Return null if an error occurs
+    return null;
+  }
 };
 
 // Get one product by ID
@@ -59,7 +112,7 @@ const deleteProduct = async (id: string): Promise<IProduct | null> => {
   ];
 
   await FileUploadHelper.deleteMultipleImagesByUrl(allurl);
-][po]  const result = await Product.findByIdAndDelete(id);
+  const result = await Product.findByIdAndDelete(id);
   return result;
 };
 

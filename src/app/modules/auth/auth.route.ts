@@ -14,10 +14,7 @@ router.post(
   AuthController.userLogin,
 );
 
-router.post(
-  '/is-exist',
-  AuthController.isUserExist,
-);
+router.post('/is-exist', AuthController.isUserExist);
 
 router.post(
   '/get-new-accessToken',
@@ -71,17 +68,16 @@ router.patch(
   AuthController.verifyEmail,
 );
 
-
-// log in with google 
+// log in with google
 router.get(
   '/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
+  passport.authenticate('google', { scope: ['profile', 'email'] }),
 );
 
-router.get(
-  '/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login' }),
-  AuthController.handleGoogleLogin
-);
+// router.get(
+//   '/google/callback',
+//   passport.authenticate('google', { failureRedirect: '/login' }),
+//   AuthController.handleGoogleLogin,
+// );
 
 export const AuthRoutes = router;

@@ -23,9 +23,7 @@ import {
 
 // passport.ts
 import passport from 'passport';
-import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
-
-
+// import { Strategy } from 'passport-google-oauth20';
 
 // login user
 const userLogin = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
@@ -54,7 +52,7 @@ const userLogin = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
   // Destructure user details
   const { _id, role, email: Email, isEmailVerified, accountType } = isUserExist;
 
-  const user = await User.findById(_id) as IUser
+  const user = (await User.findById(_id)) as IUser;
 
   // Create the accessToken payload
   const accessTokenPayload: Record<string, any> = {
@@ -100,10 +98,10 @@ const userLogin = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
       refreshToken,
       isEmailVerified,
     },
-    user: user
-  }
+    user: user,
+  };
 
-  return finalData
+  return finalData;
 };
 
 // is user exist
@@ -113,11 +111,10 @@ const isUserExist = async (payload: { email: string }): Promise<any> => {
   // Check if the user exists
   const isUserExist = await User.isUserExist(email);
   if (!isUserExist) {
-    return { isUserExist: false }
+    return { isUserExist: false };
   } else if (isUserExist) {
-    return { isUserExist: true }
+    return { isUserExist: true };
   }
-
 };
 
 // refresh Token
@@ -516,40 +513,39 @@ const resetPassword = async (
   await User.findByIdAndUpdate({ _id: userId }, { password: hashedPassword });
 };
 
+// Login with Google
+// passport.use(
+//   new GoogleStrategy(
+//     {
+//       clientID: config.google.client_id as string,
+//       clientSecret: config.google.client_secret as string,
+//       callbackURL: config.google.callback_url as string,
+//     },
+//     async (accessToken, refreshToken, profile, done) => {
+//       try {
+//         // Check if the user already exists
 
-// Login with Google 
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: config.google.client_id as string,
-      clientSecret: config.google.client_secret as string,
-      callbackURL: config.google.callback_url as string,
-    },
-    async (accessToken, refreshToken, profile, done) => {
-      try {
-        // Check if the user already exists
+//         let user = await User.isUserExist(profile.emails?.[0].value as string);
 
-        let user = await User.isUserExist(profile.emails?.[0].value as string);
+//         if (!user) {
+//           // If the user doesn't exist, create a new user
+//           user = await User.create({
+//             name: profile.displayName,
+//             email: profile.emails?.[0].value,
+//             role: 'customer',
+//             accountType: 'personal', // or default value
+//             isEmailVerified: true, // Since Google email is verified by default
+//             password: '', // No password for Google login
+//           });
+//         }
 
-        if (!user) {
-          // If the user doesn't exist, create a new user
-          user = await User.create({
-            name: profile.displayName,
-            email: profile.emails?.[0].value,
-            role: 'customer',
-            accountType: 'personal', // or default value
-            isEmailVerified: true,   // Since Google email is verified by default
-            password: '',            // No password for Google login
-          });
-        }
-
-        done(null, user);
-      } catch (error) {
-        done(error, null);
-      }
-    }
-  )
-);
+//         done(null, user);
+//       } catch (error) {
+//         done(error, null);
+//       }
+//     },
+//   ),
+// );
 
 passport.serializeUser((user: any, done) => {
   done(null, user._id);
@@ -564,7 +560,6 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-
 export const AuthService = {
   userLogin,
   isUserExist,
@@ -575,5 +570,4 @@ export const AuthService = {
   sendVerificationEmail,
   resetPassword,
   forgetPassword,
-
 };

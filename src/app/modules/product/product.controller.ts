@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { Express } from 'express';
 import httpStatus from 'http-status';
 import { productService } from './product.service'; // Adjust import path as needed
 import catchAsync from '../../../shared/catchAsync';
@@ -9,9 +10,22 @@ import { IUploadFile } from '../../../inerfaces/file';
 // Create Product
 const createProduct = catchAsync(async (req: Request, res: Response) => {
   const productData = JSON.parse(req.body.data);
-  const files = req.files as IUploadFile[];
 
-  const result = await productService.createProduct(productData, files);
+  const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+
+  // Flatten the files object into an array with fieldname property
+  const flattenedFiles = Object.entries(files).reduce(
+    (acc, [fieldname, fieldFiles]) => {
+      return [...acc, ...fieldFiles.map(file => ({ ...file, fieldname }))];
+    },
+    [] as IUploadFile[],
+  );
+
+  const result = await productService.createProduct(
+    productData,
+    flattenedFiles,
+  );
+
   sendResponse<IProduct>(res, {
     statusCode: httpStatus.OK,
     success: true,

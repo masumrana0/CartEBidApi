@@ -20,22 +20,9 @@ const customerRegistration = async (
 ): Promise<ILoginUserResponse> => {
   payload.role = 'customer';
 
-  const {
-    isEmailVerified,
-    isVerified,
-    earningBalance,
-    mainBalance,
-    rechargeEarningBalance,
-    ...userPayload
-  } = payload;
+  const { isEmailVerified, isVerified, ...userPayload } = payload;
 
-  if (
-    isEmailVerified ||
-    isVerified ||
-    earningBalance ||
-    mainBalance ||
-    rechargeEarningBalance
-  ) {
+  if (isEmailVerified || isVerified) {
     throw new ApiError(
       httpStatus.EXPECTATION_FAILED,
       'not accept any balance property.',

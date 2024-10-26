@@ -7,8 +7,11 @@ const router = express.Router();
 // Create Product
 router.post(
   '/',
-  // auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
-  FileUploadHelper.upload.array('files'),
+  FileUploadHelper.upload.fields([
+    { name: 'mainPhoto', maxCount: 1 },
+    { name: 'others', maxCount: 10 }, // Adjust maxCount as needed
+    { name: 'docs', maxCount: 5 }, // Adjust maxCount as needed
+  ]),
   productController.createProduct,
 );
 

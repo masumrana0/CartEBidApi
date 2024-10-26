@@ -39,7 +39,7 @@ const UserSchema = new Schema<IUser, UserModel>(
     accountType: {
       type: String,
       enum: ['personal', 'business'],
-      default: "personal"
+      default: 'personal',
     },
     membership: {
       type: String,
@@ -61,7 +61,6 @@ const UserSchema = new Schema<IUser, UserModel>(
       required: true,
       default: false,
     },
-
   },
   {
     timestamps: true,

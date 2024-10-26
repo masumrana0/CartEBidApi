@@ -1,4 +1,4 @@
-import { IUser } from "../user/user.interface";
+import { IUser } from '../user/user.interface';
 
 export type ILoginUser = {
   email: string;
@@ -10,8 +10,8 @@ export type ILoginUserResponse = {
     accessToken: string;
     refreshToken?: string;
     isEmailVerified?: boolean;
-  },
-  user: IUser
+  };
+  user: IUser;
 };
 
 export type IDataValidationResponse = {

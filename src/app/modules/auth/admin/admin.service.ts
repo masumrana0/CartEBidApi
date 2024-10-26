@@ -16,22 +16,9 @@ import httpStatus from 'http-status';
 
 // user registration
 const adminRegistration = async (payload: IUser): Promise<IUser> => {
-  const {
-    isEmailVerified,
-    isVerified,
-    earningBalance,
-    mainBalance,
-    rechargeEarningBalance,
-    ...userPayload
-  } = payload;
+  const { isEmailVerified, isVerified, ...userPayload } = payload;
 
-  if (
-    isEmailVerified ||
-    isVerified ||
-    earningBalance ||
-    mainBalance ||
-    rechargeEarningBalance
-  ) {
+  if (isEmailVerified || isVerified) {
     throw new ApiError(
       httpStatus.EXPECTATION_FAILED,
       'not accept any balance property.',

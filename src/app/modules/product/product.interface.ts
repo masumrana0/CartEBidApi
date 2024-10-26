@@ -1,19 +1,34 @@
 import { Types } from 'mongoose';
+import { ICommonProfile } from '../user/user.interface';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export type IProduct = {
-  _id: string;
   photos: {
     mainPhoto: string;
     others: string[];
+    docs: string[];
   };
+  title: string;
   make: string;
   model: string;
   mileage: string;
   vin: string;
-  titleStatus: string;
-  location: string;
-  seller: Types.ObjectId | string;
+  titleStatus:
+    | 'clean (CT)'
+    | 'salvage'
+    | 'rebuilt/reconstructed'
+    | 'junk'
+    | 'buyback'
+    | 'bonded'
+    | 'export only'
+    | 'odometer rollback'
+    | 'flood'
+    | 'non-repairable';
+
+  location?: {
+    city: string;
+    zipCode: number;
+  };
+  seller: Types.ObjectId | ICommonProfile;
   engine: string;
   drivetrain: string;
   transmission: 'automatic' | 'manual';
@@ -26,22 +41,32 @@ export type IProduct = {
     | 'truck'
     | 'van/minivam'
     | 'wagon';
+  launchingYear: number;
   exteriorColor: string;
   interiorColor: string;
-  sellerType: string;
+  sellerType?: string;
   highlights: string[];
   equipment: string[];
   modification: string[];
-  recentServiceHistory: string[];
-  otherItemsIncludedInSale: string[];
+  recentServiceHistory?: string[];
+  otherItemsIncludedInSale?: string[];
   ownershipHistory: string;
   sellerNotes: string[];
-  videos: string[];
-  views: number;
+  videos?: string[];
+  views?: number;
   bids: {
-    bidsHistory: any[];
+    bidsHistory?: {
+      buyer: Types.ObjectId | ICommonProfile;
+      amount: number;
+      biddingTime: Date;
+    }[];
+    biddingDuration: {
+      startBid: Date;
+      endBid: Date;
+    };
     minBid: number;
     maxBid: number;
   };
-  comments: any[];
 };
+
+// comments?: { user: ICommonProfile; comment: string }[];
