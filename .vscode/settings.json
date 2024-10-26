@@ -1,8 +1,5 @@
 {
-  "workbench.colorTheme": "MulticolorPigeon",
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit",
-    "source.fixAll.tslint": "explicit",
-    "source.organizeImports": "explicit"
-  }
+  "files.autoSave": "afterDelay",
+  "editor.fontSize": 20,
+  "editor.wordWrap": "on"
 }

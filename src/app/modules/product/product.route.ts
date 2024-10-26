@@ -1,14 +1,14 @@
 import express from 'express';
+import { FileUploadHelper } from '../../../helper/FileUploadHelper';
 import { productController } from './product.controller';
-import auth from '../../middlewares/auth';
-import { ENUM_USER_ROLE } from '../../../enums/role';
 
 const router = express.Router();
 
 // Create Product
 router.post(
   '/',
-  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
+  // auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
+  FileUploadHelper.upload.array('files'),
   productController.createProduct,
 );
 
@@ -25,14 +25,14 @@ router.get(
 // Update product
 router.patch(
   '/:id',
-  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
+  // auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
   productController.updateProduct,
 );
 
 // Delete product
 router.delete(
   '/:id',
-  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
+  // auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
   productController.deleteProduct,
 );
 

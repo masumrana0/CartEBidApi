@@ -4,12 +4,14 @@ import { productService } from './product.service'; // Adjust import path as nee
 import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
 import { IProduct } from './product.interface';
+import { IUploadFile } from '../../../inerfaces/file';
 
 // Create Product
 const createProduct = catchAsync(async (req: Request, res: Response) => {
-  const { ...productData } = req.body;
+  const productData = JSON.parse(req.body.data);
+  const files = req.files as IUploadFile[];
 
-  const result = await productService.createProduct(productData);
+  const result = await productService.createProduct(productData, files);
   sendResponse<IProduct>(res, {
     statusCode: httpStatus.OK,
     success: true,
