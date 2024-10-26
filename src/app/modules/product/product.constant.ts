@@ -8,6 +8,7 @@ export const productSearchableFields = [
   'make',
   'model',
   'engine',
+  'launchingYear',
 ];
 
 export const productFilterableFields = [
@@ -21,6 +22,9 @@ export const productFilterableFields = [
   'make',
   'model',
   'engine',
+  'launchingYear',
+  'endingSoon',
+  'newlyListed',
 ];
 
 export const bodyStyleEnum = [

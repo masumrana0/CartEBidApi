@@ -69,4 +69,20 @@ export type IProduct = {
   };
 };
 
+export type IProductFilterableField = {
+  searchTerm: string;
+  title: string;
+  interiorColor: string;
+  exteriorColor: string;
+  drivetrain: string;
+  transmission: string;
+  bodyStyle: string;
+  make: string;
+  model: string;
+  engine: string;
+  launchingYear: string;
+  endingSoon: string;
+  newlyListed: string;
+};
+
 // comments?: { user: ICommonProfile; comment: string }[];

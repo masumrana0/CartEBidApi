@@ -3,9 +3,12 @@ import { Express } from 'express';
 import httpStatus from 'http-status';
 import { productService } from './product.service'; // Adjust import path as needed
 import catchAsync from '../../../shared/catchAsync';
-import sendResponse from '../../../shared/sendResponse';
-import { IProduct } from './product.interface';
+import sendResponse, { IGenericResponse } from '../../../shared/sendResponse';
+import { IProduct, IProductFilterableField } from './product.interface';
 import { IUploadFile } from '../../../inerfaces/file';
+import pick from '../../../shared/pick';
+import { paginationFields } from '../../../constant/pagination';
+import { productFilterableFields } from './product.constant';
 
 // Create Product
 const createProduct = catchAsync(async (req: Request, res: Response) => {
@@ -36,8 +39,15 @@ const createProduct = catchAsync(async (req: Request, res: Response) => {
 
 // Get all products
 const getAllProducts = catchAsync(async (req: Request, res: Response) => {
-  const result = await productService.getAllProducts();
-  sendResponse<IProduct[]>(res, {
+  const query = req.query;
+  const paginationOption = pick(query, paginationFields);
+  const filters = pick(
+    query,
+    productFilterableFields,
+  ) as IProductFilterableField;
+
+  const result = await productService.getAllProducts(paginationOption, filters);
+  sendResponse<IGenericResponse<IProduct[]>>(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Products fetched successfully!',

@@ -9,8 +9,8 @@ router.post(
   '/',
   FileUploadHelper.upload.fields([
     { name: 'mainPhoto', maxCount: 1 },
-    { name: 'others', maxCount: 10 }, // Adjust maxCount as needed
-    { name: 'docs', maxCount: 5 }, // Adjust maxCount as needed
+    { name: 'others', maxCount: 20 },
+    { name: 'docs', maxCount: 10 },
   ]),
   productController.createProduct,
 );
