@@ -50,7 +50,14 @@ const userLogin = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
   }
 
   // Destructure user details
-  const { _id, role, email: Email, isEmailVerified, accountType } = isUserExist;
+  const {
+    _id,
+    role,
+    email: Email,
+    isEmailVerified,
+    accountType,
+    sellerType,
+  } = isUserExist;
 
   const user = (await User.findById(_id)) as IUser;
 
@@ -59,6 +66,7 @@ const userLogin = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
     userId: _id,
     role: role,
     email: Email,
+    sellerType: sellerType,
   };
 
   // Conditionally add accountType if role is 'customer'
@@ -78,6 +86,7 @@ const userLogin = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
     userId: _id,
     role: role,
     email: Email,
+    sellerType: sellerType,
   };
 
   // Conditionally add accountType if role is 'customer'

@@ -140,6 +140,16 @@ const deleteUser = async (id: string): Promise<void> => {
   await User.findByIdAndDelete(id);
 };
 
+// Gernerate common User data
+
+// const gennerateCommonProfile = async (userId: string) => {
+//   const result = await User.findById(userId).selected({
+//     profilePhoto: 1,
+//     name: 1,
+//     _id: 1,
+//   });
+// };
+
 export const UserService = {
   getAllUser,
   getOneUser,

@@ -32,6 +32,10 @@ const moduleRoutes = [
     route: productRoute,
   },
   {
+    path: '/product-comment',
+    route: productRoute,
+  },
+  {
     path: '/user',
     route: UserRoutes,
   },

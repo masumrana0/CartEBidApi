@@ -84,5 +84,3 @@ export type IProductFilterableField = {
   endingSoon: string;
   newlyListed: string;
 };
-
-// comments?: { user: ICommonProfile; comment: string }[];

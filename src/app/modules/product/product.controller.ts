@@ -9,11 +9,13 @@ import { IUploadFile } from '../../../inerfaces/file';
 import pick from '../../../shared/pick';
 import { paginationFields } from '../../../constant/pagination';
 import { productFilterableFields } from './product.constant';
+import { JwtPayload } from 'jsonwebtoken';
 
 // Create Product
 const createProduct = catchAsync(async (req: Request, res: Response) => {
   const productData = JSON.parse(req.body.data);
-
+  const { userId, sellerType } = req.user as JwtPayload;
+  const readyData = { ...productData, seller: userId, sellerType: sellerType };
   const files = req.files as { [fieldname: string]: Express.Multer.File[] };
 
   // Flatten the files object into an array with fieldname property
@@ -24,10 +26,7 @@ const createProduct = catchAsync(async (req: Request, res: Response) => {
     [] as IUploadFile[],
   );
 
-  const result = await productService.createProduct(
-    productData,
-    flattenedFiles,
-  );
+  const result = await productService.createProduct(readyData, flattenedFiles);
 
   sendResponse<IProduct>(res, {
     statusCode: httpStatus.OK,
@@ -80,17 +79,14 @@ const getProductById = catchAsync(async (req: Request, res: Response) => {
 // Update product
 const updateProduct = catchAsync(async (req: Request, res: Response) => {
   const productId = req.params.id;
-  const { ...productData } = req.body;
+  const { userId } = req.user as JwtPayload;
+  const productData = req.body;
 
-  const result = await productService.updateProduct(productId, productData);
-  if (!result) {
-    return sendResponse<null>(res, {
-      statusCode: httpStatus.NOT_FOUND,
-      success: false,
-      message: 'Product not found',
-      data: null,
-    });
-  }
+  const result = await productService.updateProduct(
+    productId,
+    userId,
+    productData,
+  );
 
   sendResponse<IProduct>(res, {
     statusCode: httpStatus.OK,
@@ -103,16 +99,8 @@ const updateProduct = catchAsync(async (req: Request, res: Response) => {
 // Delete product
 const deleteProduct = catchAsync(async (req: Request, res: Response) => {
   const productId = req.params.id;
-
-  const result = await productService.deleteProduct(productId);
-  if (!result) {
-    return sendResponse<null>(res, {
-      statusCode: httpStatus.NOT_FOUND,
-      success: false,
-      message: 'Product not found',
-      data: null,
-    });
-  }
+  const { userId } = req.user as JwtPayload;
+  const result = await productService.deleteProduct(productId, userId);
 
   sendResponse<IProduct>(res, {
     statusCode: httpStatus.OK,

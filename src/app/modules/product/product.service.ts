@@ -1,3 +1,11 @@
+/**
+ * Title: 'Product service section algorithom make by Masum Rana'
+ * Description: ''
+ * Author: 'Masum Rana'
+ * Date: 26-10-2024
+ *
+ */
+
 import { SortOrder } from 'mongoose';
 import ApiError from '../../../errors/ApiError';
 import { FileUploadHelper } from '../../../helper/FileUploadHelper';
@@ -10,6 +18,7 @@ import { IProduct, IProductFilterableField } from './product.interface';
 import { Product } from './product.model';
 import httpStatus from 'http-status';
 
+// create product
 const createProduct = async (
   productData: IProduct,
   files: IUploadFile[],
@@ -138,7 +147,11 @@ const getAllProducts = async (
   const result = await Product.find(whereConditions)
     .sort(sortConditions)
     .skip(skip)
-    .limit(limit);
+    .limit(limit)
+    .populate({
+      path: 'seller',
+      select: '_id profilePhoto name',
+    });
 
   const total = await Product.countDocuments(whereConditions);
 
@@ -154,29 +167,59 @@ const getAllProducts = async (
 
 // Get one product by ID
 const getProductById = async (id: string): Promise<IProduct | null> => {
-  const result = await Product.findById(id);
+  const result = await Product.findById(id).populate({
+    path: 'seller',
+    select: '_id profilePhoto name',
+  });
   return result;
 };
 
 // Update a product
 const updateProduct = async (
-  id: string,
+  productId: string,
+  userId: string,
   payload: Partial<IProduct>,
 ): Promise<IProduct | null> => {
-  const result = await Product.findByIdAndUpdate(id, payload, {
+  // Check if the product exists
+  const product = await Product.findById(productId);
+  if (!product) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Product not found');
+  }
+
+  // Ensure the user is authorized to update the product
+  if (product.seller.toString() !== userId) {
+    throw new ApiError(
+      httpStatus.UNAUTHORIZED,
+      'You are not authorized to update this product',
+    );
+  }
+
+  // Update the product with new data
+  const updatedProduct = await Product.findByIdAndUpdate(productId, payload, {
     new: true,
     runValidators: true,
   });
-  return result;
+
+  return updatedProduct;
 };
 
 // Delete a product
-const deleteProduct = async (id: string): Promise<IProduct | null> => {
+const deleteProduct = async (
+  id: string,
+  userId: string,
+): Promise<IProduct | null> => {
   const isExistProduct = await Product.findById(id);
   if (!isExistProduct) {
     throw new ApiError(httpStatus.NOT_FOUND, 'product not found');
   }
 
+  // Ensure the user is authorized to update the product
+  if (isExistProduct.seller.toString() !== userId) {
+    throw new ApiError(
+      httpStatus.UNAUTHORIZED,
+      'You are not authorized to delete this product',
+    );
+  }
   // delete image in cloudinary
   const allurl = [
     isExistProduct?.photos.mainPhoto,

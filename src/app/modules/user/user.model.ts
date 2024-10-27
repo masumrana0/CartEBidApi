@@ -41,6 +41,11 @@ const UserSchema = new Schema<IUser, UserModel>(
       enum: ['personal', 'business'],
       default: 'personal',
     },
+    sellerType: {
+      type: String,
+      enum: ['dealer', 'private'],
+      default: 'private',
+    },
     membership: {
       type: String,
       enum: ['free', 'paid'],
@@ -89,8 +94,7 @@ UserSchema.statics.isUserExist = async function (
       password: 1,
       role: 1,
       accountType: 1,
-      mainBalance: 1,
-      earningBalance: 1,
+      sellerType: 1,
       email: 1,
       isEmailVerified: 1,
     },

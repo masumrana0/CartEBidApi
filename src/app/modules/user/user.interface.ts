@@ -3,7 +3,7 @@ import { Model } from 'mongoose';
 
 export type ICommonProfile = {
   userId: string;
-  name?: string;
+  name: string;
   profilePhoto?: string;
 };
 
@@ -14,6 +14,7 @@ export type IUser = {
   password: string;
   role?: 'customer' | 'admin' | 'super_admin';
   accountType?: 'personal' | 'business';
+  sellerType?: 'private' | 'dealer';
   documents?: string[];
   membership?: 'free' | 'faid';
   contactNo?: string;
