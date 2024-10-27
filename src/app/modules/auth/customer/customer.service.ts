@@ -25,7 +25,7 @@ const customerRegistration = async (
   if (isEmailVerified || isVerified) {
     throw new ApiError(
       httpStatus.EXPECTATION_FAILED,
-      'not accept any balance property.',
+      'not accept any unknown  property.',
     );
   }
 
