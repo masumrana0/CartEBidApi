@@ -83,6 +83,7 @@ const createProduct = async (
         console.error('Error cleaning up uploaded files:', cleanupError);
       }
     }
+    // throw new Error(error);
     // Return null if an error occurs
     return null;
   }

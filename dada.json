@@ -1,0 +1,78 @@
+[
+  {
+    "title": "1999 BMW M3 Coupe",
+    "make": "BMW",
+    "model": "M3",
+    "mileage": "85,000",
+    "vin": "WBSBG9335XED00000",
+    "titleStatus": "clean (CA)",
+    "location": {
+      "city": "San Francisco",
+      "zipCode": 94103
+    },
+    "engine": "3.2L I6",
+    "drivetrain": "RWD",
+    "transmission": "manual",
+    "bodyStyle": "coupe",
+    "launchingYear": 1999,
+    "exteriorColor": "Estoril Blue",
+    "interiorColor": "Black",
+    "highlights": [
+      "This 1999 BMW M3 features the highly regarded S52 engine with a 5-speed manual transmission.",
+      "Carfax report shows a clean history with no accidents or mileage discrepancies, registered in California since new.",
+      "Factory features include sport seats, M-tuned suspension, and a Harmon/Kardon sound system, as detailed below.",
+      "The seller reports recent service and maintenance, including an oil change, brake pad replacement, and suspension inspection.",
+      "Launched as part of the E36 generation, this M3 offers a blend of sport and luxury with precise handling and a high-revving inline-six engine."
+    ],
+    "equipment": [
+      "M-tuned suspension",
+      "Harmon/Kardon premium audio system",
+      "Leather sport seats with manual adjustment",
+      "18-inch forged alloy wheels with Michelin Pilot Sport tires",
+      "Automatic climate control",
+      "Power-adjustable side mirrors",
+      "AM/FM/CD audio system with six speakers",
+      "ABS and traction control"
+    ],
+    "modification": [
+      "Upgraded Bilstein shock absorbers",
+      "Eibach lowering springs",
+      "Remus stainless steel exhaust system",
+      "Upgraded air intake system",
+      "Short-throw shifter kit"
+    ],
+    "recentServiceHistory": [
+      "September 2024: Oil change and filter replacement, brake pads replaced, suspension inspection",
+      "June 2023: Upgraded Bilstein shocks and Eibach springs installed",
+      "March 2023: New Michelin Pilot Sport tires installed",
+      "November 2022: New air intake and Remus exhaust system installed"
+    ],
+    "otherItemsIncludedInSale": [
+      "Original owner's manual",
+      "Two sets of keys",
+      "BMW car cover",
+      "Spare wheel and tire kit",
+      "Maintenance records"
+    ],
+    "ownershipHistory": "The seller purchased this M3 in August 2020 and has added approximately 5,000 miles since. It has been kept in a garage and maintained meticulously, as shown in the service records.",
+    "sellerNotes": [
+      "This M3 is offered with a complete set of service records and a clean California title.",
+      "The car has been maintained to preserve its original handling and performance capabilities."
+    ],
+    "videos": [
+      "https://youtu.be/chkKse7boKw?si=bXAS889thIUvHjmZ",
+      "https://youtu.be/ZMMJyFkyPbM?si=dkMPTKrU9eEmMmtw",
+      "https://youtu.be/YuzClM_OAO0?si=Ttpk3dC0vVgXa60F",
+      "https://youtu.be/ItreON4lIW8?si=Xz62tiN29_HZTgL5"
+    ],
+    "views": 212,
+    "bids": {
+      "biddingDuration": {
+        "startBid": "2024-10-25T10:00:00Z",
+        "endBid": "2024-10-29T10:00:00Z"
+      },
+      "minBid": 12000,
+      "maxBid": 18000
+    }
+  }
+]
