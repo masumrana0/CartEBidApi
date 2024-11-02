@@ -29,7 +29,7 @@ const createProduct = catchAsync(async (req: Request, res: Response) => {
   const result = await productService.createProduct(readyData, flattenedFiles);
 
   sendResponse<IProduct>(res, {
-    statusCode: httpStatus.OK,
+    statusCode: httpStatus.CREATED,
     success: true,
     message: 'Product created successfully!',
     data: result,

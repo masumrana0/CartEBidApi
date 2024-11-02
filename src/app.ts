@@ -12,9 +12,9 @@ import GlobalErrorHandler from './app/middlewares/GlobalErrorHanlder';
 import handleNotFoundApi from './errors/handleNotFound';
 import router from './app/routes';
 import cookieParser from 'cookie-parser';
-import passport from 'passport';
-import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
-import config from './config';
+// import passport from 'passport';
+// import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+// import config from './config';
 
 const app: Application = express();
 
@@ -26,19 +26,19 @@ app.use(
 );
 
 // Passport configuration
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: config.google.client_id as string,
-      clientSecret: config.google.client_secret as string,
-      callbackURL: config.google.callback_url as string,
-    },
-    (accessToken, refreshToken, profile, done) => {
-      // You should save the user profile to your database here
-      return done(null, profile);
-    },
-  ),
-);
+// passport.use(
+//   new GoogleStrategy(
+//     {
+//       clientID: config.google.client_id as string,
+//       clientSecret: config.google.client_secret as string,
+//       callbackURL: config.google.callback_url as string,
+//     },
+//     (accessToken, refreshToken, profile, done) => {
+//       // You should save the user profile to your database here
+//       return done(null, profile);
+//     },
+//   ),
+// );
 
 app.use(cookieParser());
 

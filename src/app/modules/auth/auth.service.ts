@@ -22,7 +22,7 @@ import {
 } from './auth.interface';
 
 // passport.ts
-import passport from 'passport';
+// import passport from 'passport';
 // import { Strategy } from 'passport-google-oauth20';
 
 // login user
@@ -556,18 +556,18 @@ const resetPassword = async (
 //   ),
 // );
 
-passport.serializeUser((user: any, done) => {
-  done(null, user._id);
-});
+// passport.serializeUser((user: any, done) => {
+//   done(null, user._id);
+// });
 
-passport.deserializeUser(async (id, done) => {
-  try {
-    const user = await User.findById(id);
-    done(null, user);
-  } catch (error) {
-    done(error, null);
-  }
-});
+// passport.deserializeUser(async (id, done) => {
+//   try {
+//     const user = await User.findById(id);
+//     done(null, user);
+//   } catch (error) {
+//     done(error, null);
+//   }
+// });
 
 export const AuthService = {
   userLogin,

@@ -4,7 +4,7 @@ import { authValidationSchema } from './auth.validation';
 import { AuthController } from './auth.controller';
 import auth from '../../middlewares/auth';
 import { ENUM_USER_ROLE } from '../../../enums/role';
-import passport from 'passport';
+// import passport from 'passport';
 
 const router = express.Router();
 
@@ -69,10 +69,10 @@ router.patch(
 );
 
 // log in with google
-router.get(
-  '/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] }),
-);
+// router.get(
+//   '/google',
+//   passport.authenticate('google', { scope: ['profile', 'email'] }),
+// );
 
 // router.get(
 //   '/google/callback',

@@ -9,7 +9,8 @@
 import dotenv from 'dotenv';
 import path from 'path';
 dotenv.config({ path: path.join(process.cwd(), '.env') });
-// console.log(process.env.DATABASE_URL);
+
+console.log(process.env.DATABASE_URL);
 export default {
   env: process.env.NODE_ENV,
   port: process.env.PORT,
@@ -21,11 +22,11 @@ export default {
   reset_password_url: process.env.RESET_PASSWORD_URL,
   verify_user_url: process.env.VERIFY_USER_URL,
   super_admin_id: process.env.SUPER_ADMIN_ID,
-  google: {
-    client_id: process.env.GOOGLE_CLIENT_ID,
-    client_secret: process.env.GOOGLE_CLIENT_SECRET,
-    callback_url: process.env.GOOGLE_CALLBACK_URL,
-  },
+  // google: {
+  //   client_id: process.env.GOOGLE_CLIENT_ID,
+  //   client_secret: process.env.GOOGLE_CLIENT_SECRET,
+  //   callback_url: process.env.GOOGLE_CALLBACK_URL,
+  // },
 
   jwt: {
     accessTokenSecret: process.env.JWT_ACCESSTOKEN_SECRET,
